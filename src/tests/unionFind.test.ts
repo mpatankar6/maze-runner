@@ -2,7 +2,7 @@ import { it, expect, describe } from "vitest";
 import { UnionFind } from "../unionFind";
 import { Cell } from "../graph";
 
-describe("unionFind", () => {
+describe("UnionFind", () => {
   it("should only perform union once on the same two cells", () => {
     const unionFind = new UnionFind();
     const cellA = new Cell(0, 0);
