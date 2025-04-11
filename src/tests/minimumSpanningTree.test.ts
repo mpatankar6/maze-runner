@@ -57,4 +57,25 @@ describe("minimumSpanningTree", () => {
     expect(mst).toHaveLength(3);
     expect(totalWeight).toBe(1 + 1 + 0.5);
   });
+
+  it("should reorder edges to be of ascending weights", () => {
+    const cellA = new Cell(0, 0);
+    const cellB = new Cell(0, 1);
+    const cellC = new Cell(1, 0);
+    const cellD = new Cell(1, 1);
+
+    const edges: Edge[] = [
+      { from: cellA, to: cellB, weight: 0.99 },
+      { from: cellB, to: cellD, weight: 0.1 },
+      { from: cellA, to: cellC, weight: 0.02 },
+    ];
+
+    const mst = minimumSpanningTree(edges, 4);
+    const weights = mst.map((edge) => edge.weight);
+    expect(weights).toEqual([
+      edges[2].weight,
+      edges[1].weight,
+      edges[0].weight,
+    ]);
+  });
 });
