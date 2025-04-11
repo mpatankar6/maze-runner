@@ -1,5 +1,5 @@
 import { Grid } from "./grid";
-import "./style.css";
+import "./styles/style.css";
 
 const canvasElement = document.getElementById("maze-window");
 if (!canvasElement) throw new Error("No #maze-window canvas element found.");
