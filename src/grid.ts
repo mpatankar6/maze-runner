@@ -5,7 +5,6 @@ export class Grid {
   readonly cells: Cell[][] = [];
   readonly edges: Edge[];
   readonly canvas: HTMLCanvasElement;
-  wallsOverlay: HTMLCanvasElement | null = null;
 
   constructor(rows: number, cols: number, canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -63,19 +62,5 @@ export class Grid {
     if (!context) throw new Error("No 2D context found on canvas.");
     this.cells.forEach((row) => row.forEach((cell) => cell.draw(context)));
     this.cells.forEach((row) => row.forEach((cell) => cell.drawWalls(context)));
-    if (!this.wallsOverlay) {
-      this.cacheWallImage();
-    }
-    context.drawImage(this.wallsOverlay!, 0, 0);
-  }
-
-  public cacheWallImage() {
-    const cacheCanvas = document.createElement("canvas");
-    const context = cacheCanvas.getContext("2d")!;
-    cacheCanvas.width = this.canvas.width;
-    cacheCanvas.height = this.canvas.height;
-    context.clearRect(0, 0, cacheCanvas.width, cacheCanvas.height);
-    this.cells.forEach((row) => row.forEach((cell) => cell.drawWalls(context)));
-    this.wallsOverlay = cacheCanvas;
   }
 }
