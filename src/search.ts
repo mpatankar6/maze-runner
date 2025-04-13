@@ -31,12 +31,19 @@ function search(
     } else if (alreadySeen.has(next)) {
       continue;
     } else {
-      next.accessibleNeighbors.forEach((cell) => {
-        addFunction(worklist, cell);
-        cameFrom.set(cell, next);
-      });
+      next.accessibleNeighbors
+        .filter((cell) => !alreadySeen.has(cell))
+        .forEach((cell) => {
+          addFunction(worklist, cell);
+          cameFrom.set(cell, next);
+        });
       alreadySeen.add(next);
     }
   }
   return [];
 }
+
+type SearchResult = {
+  shortestPath: Cell[];
+  allVisitedCells: Cell[];
+};

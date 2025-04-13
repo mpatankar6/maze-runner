@@ -1,10 +1,11 @@
 import { Cell, Edge } from "./graph";
 import { minimumSpanningTree } from "./minimumSpanningTree";
+import { breadthFirstSearch, depthFirstSearch } from "./search";
 
 export class Grid {
-  readonly cells: Cell[][] = [];
-  readonly edges: Edge[];
-  readonly canvas: HTMLCanvasElement;
+  private readonly cells: Cell[][] = [];
+  private readonly edges: Edge[];
+  private readonly canvas: HTMLCanvasElement;
 
   constructor(rows: number, cols: number, canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -57,10 +58,23 @@ export class Grid {
     }
   }
 
-  public drawCellsToCanvas() {
+  private get context(): CanvasRenderingContext2D {
     const context = this.canvas.getContext("2d");
     if (!context) throw new Error("No 2D context found on canvas.");
-    this.cells.forEach((row) => row.forEach((cell) => cell.draw(context)));
-    this.cells.forEach((row) => row.forEach((cell) => cell.drawWalls(context)));
+    return context;
+  }
+
+  public drawCellsToCanvas() {
+    this.cells.forEach((row) => row.forEach((cell) => cell.draw(this.context)));
+    this.cells.forEach((row) =>
+      row.forEach((cell) => cell.drawWalls(this.context))
+    );
+  }
+
+  public drawPathToEnd() {
+    depthFirstSearch(
+      this.cells[0][0],
+      this.cells[this.cells.length - 1][this.cells[0].length - 1]
+    ).forEach((cell) => cell.fill(this.context));
   }
 }

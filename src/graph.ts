@@ -2,10 +2,10 @@ const GRAY = "rgb(192, 192, 192)";
 const DARK_GRAY = "rgb(102, 102, 102)";
 
 export class Cell {
-  readonly row: number;
-  readonly col: number;
-  readonly widthPixels: number;
-  readonly heightPixels: number;
+  private readonly row: number;
+  private readonly col: number;
+  private readonly widthPixels: number;
+  private readonly heightPixels: number;
   readonly accessibleNeighbors: Cell[] = [];
 
   constructor(
@@ -24,7 +24,7 @@ export class Cell {
     context.fillStyle = DARK_GRAY;
     const x = this.col * this.widthPixels - 1;
     const y = this.row * this.heightPixels - 1;
-    const weightPixels = 2;
+    const lineWeight = 2;
     let drawTopWall = true;
     let drawBottomWall = true;
     let drawLeftWall = true;
@@ -36,26 +36,16 @@ export class Cell {
       else if (neighbor.col === this.col + 1) drawRightWall = false;
     }
     if (drawTopWall) {
-      context.fillRect(x, y, this.widthPixels + weightPixels, weightPixels);
+      context.fillRect(x, y, this.widthPixels + lineWeight, lineWeight);
     }
     if (drawBottomWall) {
-      context.fillRect(
-        x,
-        y + this.heightPixels,
-        this.widthPixels,
-        weightPixels
-      );
+      context.fillRect(x, y + this.heightPixels, this.widthPixels, lineWeight);
     }
     if (drawLeftWall) {
-      context.fillRect(x, y, weightPixels, this.heightPixels);
+      context.fillRect(x, y, lineWeight, this.heightPixels);
     }
     if (drawRightWall) {
-      context.fillRect(
-        x + this.widthPixels,
-        y,
-        weightPixels,
-        this.heightPixels
-      );
+      context.fillRect(x + this.widthPixels, y, lineWeight, this.heightPixels);
     }
   }
 
@@ -65,6 +55,15 @@ export class Cell {
     const x = this.col * this.widthPixels;
     const y = this.row * this.heightPixels;
     context.fillRect(x, y, this.widthPixels, this.heightPixels);
+  }
+
+  public fill(context: CanvasRenderingContext2D) {
+    console.log("Hello");
+
+    context.fillStyle = "rgb(255 0 0)";
+    const x = this.col * this.widthPixels + 1;
+    const y = this.row * this.heightPixels + 1;
+    context.fillRect(x, y, this.widthPixels - 1, this.heightPixels - 1);
   }
 
   public addNeighbor(to: Cell) {
