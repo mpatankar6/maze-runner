@@ -18,31 +18,31 @@ describe("search", () => {
   describe("breadthFirstSearch", () => {
     it("should find the reflexive path", () => {
       const a = new Cell(0, 0);
-      expect(breadthFirstSearch(a, a)).toEqual([a]);
+      expect(breadthFirstSearch(a, a).path).toEqual([a]);
     });
 
     it("should return an efficient path when the target is near the root", () => {
-      const efficientPath = breadthFirstSearch(a, d);
+      const efficientPath = breadthFirstSearch(a, d).path ?? [];
       expect(efficientPath.length).toBeLessThanOrEqual(2);
       expect(efficientPath).toEqual([a, d]);
     });
 
-    it("should return an empty array if no path is found", () => {
+    it("should return null if no path is found", () => {
       const a = new Cell(0, 0);
       const b = new Cell(1, 0);
-      const path = breadthFirstSearch(a, b);
-      expect(path).toEqual([]);
+      const path = breadthFirstSearch(a, b).path;
+      expect(path).toBeNull();
     });
   });
 
   describe("depthFirstSearch", () => {
     it("should find the reflexive path", () => {
       const a = new Cell(0, 0);
-      expect(depthFirstSearch(a, a)).toEqual([a]);
+      expect(depthFirstSearch(a, a).path).toEqual([a]);
     });
 
     it("should return an inefficient path when the target is near the root", () => {
-      const inefficientPath = depthFirstSearch(a, d);
+      const inefficientPath = depthFirstSearch(a, d).path ?? [];
       expect(inefficientPath.length).toBeGreaterThan(2);
       expect(inefficientPath).toEqual([a, b, c, d]);
     });
@@ -50,8 +50,8 @@ describe("search", () => {
     it("should return an empty array if no path is found", () => {
       const a = new Cell(0, 0);
       const b = new Cell(1, 0);
-      const path = breadthFirstSearch(a, b);
-      expect(path).toEqual([]);
+      const path = breadthFirstSearch(a, b).path;
+      expect(path).toBeNull();
     });
   });
 });

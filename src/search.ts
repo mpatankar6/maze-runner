@@ -12,13 +12,15 @@ function search(
   from: Cell,
   to: Cell,
   addFunction: (worklist: Cell[], cell: Cell) => void
-) {
+): SearchResult {
   const worklist: Cell[] = [from];
   const alreadySeen: Set<Cell> = new Set<Cell>();
   const cameFrom: Map<Cell, Cell> = new Map();
+  const allVisitedCells: Cell[] = [];
 
   while (worklist.length > 0) {
     const next = worklist.pop()!;
+    allVisitedCells.push(next);
     if (next === to) {
       const path = [];
       let lastCell = next;
@@ -27,7 +29,7 @@ function search(
         lastCell = cameFrom.get(lastCell)!;
       }
       path.push(lastCell);
-      return path.reverse();
+      return { path: path.reverse(), allVisitedCells };
     } else if (alreadySeen.has(next)) {
       continue;
     } else {
@@ -40,10 +42,10 @@ function search(
       alreadySeen.add(next);
     }
   }
-  return [];
+  return { path: null, allVisitedCells };
 }
 
 type SearchResult = {
-  shortestPath: Cell[];
+  path: Cell[] | null;
   allVisitedCells: Cell[];
 };
