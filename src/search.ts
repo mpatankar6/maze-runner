@@ -46,7 +46,7 @@ function search(
   return { path: null, allVisitedCells };
 }
 
-type SearchResult = {
+export type SearchResult = {
   path: Cell[] | null;
   allVisitedCells: Cell[];
 };

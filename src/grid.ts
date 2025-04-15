@@ -1,6 +1,6 @@
 import { Cell, Edge } from "./graph";
 import { minimumSpanningTree } from "./minimumSpanningTree";
-import { breadthFirstSearch, depthFirstSearch } from "./search";
+import { depthFirstSearch, SearchResult } from "./search";
 
 export class Grid {
   private readonly cells: Cell[][] = [];
@@ -58,25 +58,33 @@ export class Grid {
     }
   }
 
-  private get context(): CanvasRenderingContext2D {
+  private get context() {
     const context = this.canvas.getContext("2d");
     if (!context) throw new Error("No 2D context found on canvas.");
     return context;
   }
 
-  public drawCellsToCanvas() {
-    this.cells.forEach((row) => row.forEach((cell) => cell.draw(this.context)));
-    this.cells[0][0].draw(this.context, "rgb(63, 126, 76)");
-    this.cells[this.cells.length - 1][this.cells[0].length - 1].draw(
-      this.context,
-      "rgb(99, 37, 124)"
-    );
+  private get startingCell() {
+    return this.cells[0][0];
   }
 
-  public drawPathToEnd() {
-    breadthFirstSearch(
-      this.cells[0][0],
-      this.cells[this.cells.length - 1][this.cells[0].length - 1]
-    ).path!.forEach((cell) => cell.draw(this.context, "rgb(255, 0, 0)"));
+  private get endingCell() {
+    return this.cells[this.cells.length - 1][this.cells[0].length - 1];
+  }
+
+  public drawCellsToCanvas() {
+    this.cells.forEach((row) => row.forEach((cell) => cell.draw(this.context)));
+    this.startingCell.draw(this.context, "rgb(63, 126, 76)");
+    this.endingCell.draw(this.context, "rgb(99, 37, 124)");
+  }
+
+  public showSolution() {
+    const path = depthFirstSearch(this.startingCell, this.endingCell).path;
+    if (!path) throw new Error("Maze cannot be solved");
+    path.forEach((cell) => cell.draw(this.context, "rgb(75, 116, 198)"));
+  }
+
+  public searchGrid(searchFunction: (from: Cell, to: Cell) => SearchResult) {
+    return searchFunction(this.startingCell, this.endingCell);
   }
 }
