@@ -66,15 +66,17 @@ export class Grid {
 
   public drawCellsToCanvas() {
     this.cells.forEach((row) => row.forEach((cell) => cell.draw(this.context)));
-    this.cells.forEach((row) =>
-      row.forEach((cell) => cell.drawWalls(this.context))
+    this.cells[0][0].draw(this.context, "rgb(63, 126, 76)");
+    this.cells[this.cells.length - 1][this.cells[0].length - 1].draw(
+      this.context,
+      "rgb(99, 37, 124)"
     );
   }
 
   public drawPathToEnd() {
-    depthFirstSearch(
+    breadthFirstSearch(
       this.cells[0][0],
       this.cells[this.cells.length - 1][this.cells[0].length - 1]
-    ).forEach((cell) => cell.fill(this.context));
+    ).path!.forEach((cell) => cell.draw(this.context, "rgb(255, 0, 0)"));
   }
 }
