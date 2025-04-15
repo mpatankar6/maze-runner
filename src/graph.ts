@@ -1,12 +1,9 @@
-const GRAY = "rgb(192, 192, 192)";
-const DARK_GRAY = "rgb(102, 102, 102)";
-
 export class Cell {
   private readonly row: number;
   private readonly col: number;
   private readonly widthPixels: number;
   private readonly heightPixels: number;
-  readonly accessibleNeighbors: Cell[] = [];
+  private readonly accessibleNeighbors: Cell[] = [];
 
   constructor(
     row: number,
@@ -20,11 +17,17 @@ export class Cell {
     this.heightPixels = heightPixels ?? 0;
   }
 
-  public drawWalls(context: CanvasRenderingContext2D) {
-    context.fillStyle = DARK_GRAY;
-    const x = this.col * this.widthPixels - 1;
-    const y = this.row * this.heightPixels - 1;
-    const lineWeight = 2;
+  private fill(context: CanvasRenderingContext2D, color: string) {
+    context.fillStyle = color;
+    const x = this.col * this.widthPixels;
+    const y = this.row * this.heightPixels;
+    context.fillRect(x, y, this.widthPixels, this.heightPixels);
+  }
+
+  private drawWalls(context: CanvasRenderingContext2D) {
+    context.fillStyle = "rgb(102, 102, 102)";
+    const x = this.col * this.widthPixels;
+    const y = this.row * this.heightPixels;
     let drawTopWall = true;
     let drawBottomWall = true;
     let drawLeftWall = true;
@@ -36,38 +39,34 @@ export class Cell {
       else if (neighbor.col === this.col + 1) drawRightWall = false;
     }
     if (drawTopWall) {
-      context.fillRect(x, y, this.widthPixels + lineWeight, lineWeight);
+      context.fillRect(x, y, this.widthPixels, 1);
     }
     if (drawBottomWall) {
-      context.fillRect(x, y + this.heightPixels, this.widthPixels, lineWeight);
+      context.fillRect(x, y + this.heightPixels - 1, this.widthPixels, 1);
     }
     if (drawLeftWall) {
-      context.fillRect(x, y, lineWeight, this.heightPixels);
+      context.fillRect(x, y, 1, this.heightPixels);
     }
     if (drawRightWall) {
-      context.fillRect(x + this.widthPixels, y, lineWeight, this.heightPixels);
+      context.fillRect(x + this.widthPixels - 1, y, 1, this.heightPixels);
     }
   }
 
-  public draw(context: CanvasRenderingContext2D) {
-    if (this.row === 0 && this.col === 0) context.fillStyle = "rgb(63 126 76)";
-    else context.fillStyle = GRAY;
-    const x = this.col * this.widthPixels;
-    const y = this.row * this.heightPixels;
-    context.fillRect(x, y, this.widthPixels, this.heightPixels);
-  }
-
-  public fill(context: CanvasRenderingContext2D) {
-    console.log("Hello");
-
-    context.fillStyle = "rgb(255 0 0)";
-    const x = this.col * this.widthPixels + 1;
-    const y = this.row * this.heightPixels + 1;
-    context.fillRect(x, y, this.widthPixels - 1, this.heightPixels - 1);
+  public draw(context: CanvasRenderingContext2D, fillColor?: string) {
+    this.fill(context, fillColor ?? "rgb(192, 192, 192)");
+    this.drawWalls(context);
   }
 
   public addNeighbor(to: Cell) {
     this.accessibleNeighbors.push(to);
+  }
+
+  /**
+   * Retrieves the accessible neighbors of the current node.
+   * @returns The list of neighboring nodes.
+   */
+  public neighbors(): Cell[] {
+    return this.accessibleNeighbors;
   }
 }
 

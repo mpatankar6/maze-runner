@@ -33,7 +33,8 @@ function search(
     } else if (alreadySeen.has(next)) {
       continue;
     } else {
-      next.accessibleNeighbors
+      next
+        .neighbors()
         .filter((cell) => !alreadySeen.has(cell))
         .forEach((cell) => {
           addFunction(worklist, cell);
