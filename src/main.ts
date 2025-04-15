@@ -8,8 +8,8 @@ const canvasElement = document.getElementById(
 ) as HTMLCanvasElement | null;
 if (!canvasElement) throw new Error("No #maze-window canvas element found.");
 
-const rows = 6;
-const cols = 6;
+const rows = 3;
+const cols = 3;
 
 let grid = new Grid(rows, cols, canvasElement);
 grid.drawCellsToCanvas();

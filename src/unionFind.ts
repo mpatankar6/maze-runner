@@ -1,4 +1,4 @@
-import { Cell } from "./graph";
+import { Cell } from "./cell";
 
 export class UnionFind {
   private readonly cellToParent: Map<Cell, Cell> = new Map();

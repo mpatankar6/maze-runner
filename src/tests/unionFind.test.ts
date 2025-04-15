@@ -1,6 +1,6 @@
 import { it, expect, describe } from "vitest";
 import { UnionFind } from "../unionFind";
-import { Cell } from "../graph";
+import { Cell } from "../cell";
 
 describe("UnionFind", () => {
   it("should only perform union once on the same two cells", () => {

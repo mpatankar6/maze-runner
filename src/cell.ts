@@ -75,9 +75,3 @@ export class Cell {
     );
   }
 }
-
-export type Edge = {
-  readonly from: Cell;
-  readonly to: Cell;
-  readonly weight: number;
-};

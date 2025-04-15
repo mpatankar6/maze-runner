@@ -1,4 +1,4 @@
-import { Edge } from "./graph";
+import { Edge } from "./cell";
 import { UnionFind } from "./unionFind";
 
 /**

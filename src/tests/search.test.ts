@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { breadthFirstSearch, depthFirstSearch } from "../search";
-import { Cell } from "../graph";
+import { Cell } from "../cell";
 
 describe("search", () => {
   const a = new Cell(0, 0);

@@ -1,4 +1,4 @@
-import { Cell, Edge } from "./graph";
+import { Cell, Edge } from "./cell";
 import { minimumSpanningTree } from "./minimumSpanningTree";
 import { depthFirstSearch, SearchResult } from "./search";
 
@@ -78,8 +78,7 @@ export class Grid {
   }
 
   public drawCellsToCanvas() {
-    // TODO use flat
-    this.cells.forEach((row) => row.forEach((cell) => cell.draw(this.context)));
+    this.cells.flat().forEach((cell) => cell.draw(this.context));
     this.startingCell.draw(this.context, "rgb(63, 126, 76)");
     this.endingCell.draw(this.context, "rgb(99, 37, 124)");
   }

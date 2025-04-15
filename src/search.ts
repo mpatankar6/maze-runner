@@ -1,4 +1,4 @@
-import { Cell } from "./graph";
+import { Cell } from "./cell";
 
 export function breadthFirstSearch(from: Cell, to: Cell) {
   return search(from, to, (worklist, cell) => worklist.unshift(cell));
