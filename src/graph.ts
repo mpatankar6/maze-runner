@@ -68,6 +68,12 @@ export class Cell {
   public neighbors(): Cell[] {
     return this.accessibleNeighbors;
   }
+
+  public hasConnectionWithCoordinates(x: number, y: number) {
+    return this.accessibleNeighbors.some(
+      (neighbor) => neighbor.row === y && neighbor.col === x
+    );
+  }
 }
 
 export type Edge = {

@@ -6,6 +6,7 @@ export class Grid {
   private readonly cells: Cell[][] = [];
   private readonly edges: Edge[];
   private readonly canvas: HTMLCanvasElement;
+  private playerPosition = { x: 0, y: 0 };
 
   constructor(rows: number, cols: number, canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -72,7 +73,12 @@ export class Grid {
     return this.cells[this.cells.length - 1][this.cells[0].length - 1];
   }
 
+  private get playerCell() {
+    return this.cells[this.playerPosition.y][this.playerPosition.x];
+  }
+
   public drawCellsToCanvas() {
+    // TODO use flat
     this.cells.forEach((row) => row.forEach((cell) => cell.draw(this.context)));
     this.startingCell.draw(this.context, "rgb(63, 126, 76)");
     this.endingCell.draw(this.context, "rgb(99, 37, 124)");
@@ -86,5 +92,26 @@ export class Grid {
 
   public searchGrid(searchFunction: (from: Cell, to: Cell) => SearchResult) {
     return searchFunction(this.startingCell, this.endingCell);
+  }
+
+  public movePlayerIfPossible(dx: number, dy: number) {
+    const newPosition = {
+      x: this.playerPosition.x + dx,
+      y: this.playerPosition.y + dy,
+    };
+    if (
+      this.playerCell.hasConnectionWithCoordinates(newPosition.x, newPosition.y)
+    ) {
+      if (this.playerCell !== this.startingCell)
+        this.playerCell.draw(this.context);
+      this.playerPosition.x = newPosition.x;
+      this.playerPosition.y = newPosition.y;
+      if (this.playerCell !== this.startingCell)
+        this.playerCell.draw(this.context, "rgb(153, 183, 237)");
+    }
+  }
+
+  public playerWon() {
+    return this.playerCell === this.endingCell;
   }
 }

@@ -1,5 +1,4 @@
 import { GridAnimator } from "./gridAnimator";
-import { Game } from "./game";
 import { Grid } from "./grid";
 import { breadthFirstSearch, depthFirstSearch } from "./search";
 import "./styles/style.css";
@@ -9,52 +8,60 @@ const canvasElement = document.getElementById(
 ) as HTMLCanvasElement | null;
 if (!canvasElement) throw new Error("No #maze-window canvas element found.");
 
-const rows = 10;
-const cols = 10;
+const rows = 6;
+const cols = 6;
 
 let grid = new Grid(rows, cols, canvasElement);
 grid.drawCellsToCanvas();
-const game = new Game(grid);
+
+let mazeCompleted = false;
 
 const animationController = new GridAnimator(canvasElement);
 
-document.addEventListener("keydown", (event) => {
-  console.log(event.key);
+function finalizeMaze() {
+  grid.showSolution();
+  mazeCompleted = true;
+}
 
+document.addEventListener("keydown", (event) => {
   switch (event.key) {
-    case "s":
+    case "ArrowUp":
+      if (!mazeCompleted) grid.movePlayerIfPossible(0, -1);
+      break;
+    case "ArrowLeft":
+      if (!mazeCompleted) grid.movePlayerIfPossible(-1, 0);
+      break;
+    case "ArrowDown":
+      if (!mazeCompleted) grid.movePlayerIfPossible(0, 1);
+      break;
+    case "ArrowRight":
+      if (!mazeCompleted) grid.movePlayerIfPossible(1, 0);
       break;
     case "r":
+      mazeCompleted = false;
       animationController.cancelCurrentAnimation();
       grid = new Grid(rows, cols, canvasElement as HTMLCanvasElement);
       grid.drawCellsToCanvas();
-      break;
-    case "w":
-      game.movePlayer(0, -1);
-      break;
-    case "a":
-      game.movePlayer(-1, 0);
-      break;
-    case "s":
-      game.movePlayer(0, 1);
-      break;
-    case "ArrowRight":
-      game.movePlayer(1, 0);
       break;
     case "b":
       grid.drawCellsToCanvas();
       animationController.animateSearch(
         grid.searchGrid(breadthFirstSearch),
-        () => grid.showSolution()
+        finalizeMaze
       );
       break;
     case "d":
       grid.drawCellsToCanvas();
-      animationController.animateSearch(grid.searchGrid(depthFirstSearch), () =>
-        grid.showSolution()
+      animationController.animateSearch(
+        grid.searchGrid(depthFirstSearch),
+        finalizeMaze
       );
       break;
     default:
+      console.log("Unrecognized keystroke: ", event.key);
       break;
+  }
+  if (grid.playerWon()) {
+    finalizeMaze();
   }
 });
