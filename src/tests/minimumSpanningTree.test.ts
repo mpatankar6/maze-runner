@@ -1,6 +1,7 @@
 import { expect, describe, it } from "vitest";
 import { minimumSpanningTree } from "../minimumSpanningTree";
-import { Cell, Edge } from "../cell";
+import { Cell } from "../cell";
+import { Edge } from "../edge";
 
 describe("minimumSpanningTree", () => {
   it("should handle an empty input", () => {

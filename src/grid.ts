@@ -1,4 +1,5 @@
-import { Cell, Edge } from "./cell";
+import { Cell } from "./cell";
+import { Edge } from "./edge";
 import { minimumSpanningTree } from "./minimumSpanningTree";
 import { depthFirstSearch, SearchResult } from "./search";
 

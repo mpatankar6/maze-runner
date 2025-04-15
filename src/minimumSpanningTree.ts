@@ -1,4 +1,4 @@
-import { Edge } from "./cell";
+import { Edge } from "./edge";
 import { UnionFind } from "./unionFind";
 
 /**
