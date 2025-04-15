@@ -1,4 +1,5 @@
 import { Cell } from "./cell";
+import { ColorInterpolator } from "./colorInterpolator";
 import { Edge } from "./edge";
 import { minimumSpanningTree } from "./minimumSpanningTree";
 import { depthFirstSearch, SearchResult } from "./search";
@@ -80,6 +81,7 @@ export class Grid {
 
   public drawCellsToCanvas() {
     this.cells.flat().forEach((cell) => cell.draw(this.context));
+    this.playerCell.draw(this.context, "rgb(50, 205, 50)");
     this.startingCell.draw(this.context, "rgb(63, 126, 76)");
     this.endingCell.draw(this.context, "rgb(99, 37, 124)");
   }
@@ -102,16 +104,58 @@ export class Grid {
     if (
       this.playerCell.hasConnectionWithCoordinates(newPosition.x, newPosition.y)
     ) {
-      if (this.playerCell !== this.startingCell)
-        this.playerCell.draw(this.context);
       this.playerPosition.x = newPosition.x;
       this.playerPosition.y = newPosition.y;
-      if (this.playerCell !== this.startingCell)
-        this.playerCell.draw(this.context, "rgb(153, 183, 237)");
+      this.drawCellsToCanvas();
+      // if (this.playerCell !== this.startingCell)
+      //   this.playerCell.draw(this.context, "rgb(50, 205, 50)");
     }
   }
 
   public playerWon() {
     return this.playerCell === this.endingCell;
+  }
+
+  private generateDistanceMap(relativeTo: Cell) {
+    const distanceMap = new Map<Cell, number>();
+    const visited = new Set<Cell>();
+    const queue: Cell[] = [relativeTo];
+    distanceMap.set(relativeTo, 0);
+    visited.add(relativeTo);
+
+    while (queue.length > 0) {
+      const currentCell = queue.pop()!;
+      const currentDistance = distanceMap.get(currentCell)!;
+      currentCell
+        .neighbors()
+        .filter((neighbor) => !visited.has(neighbor))
+        .forEach((neighbor) => {
+          distanceMap.set(neighbor, currentDistance + 1);
+          visited.add(neighbor);
+          queue.push(neighbor);
+        });
+    }
+    return distanceMap;
+  }
+
+  private colorCellsByDistance(relativeTo: Cell) {
+    const map = this.generateDistanceMap(relativeTo);
+    const values = Array.from(map.values());
+    const colorInterpolator = new ColorInterpolator(
+      Math.min(...values),
+      Math.max(...values)
+    );
+    map.forEach((value, key) => {
+      if (key !== this.startingCell && key !== this.endingCell)
+        key.draw(this.context, colorInterpolator.interpolateRedToPurple(value));
+    });
+  }
+
+  public colorCellsByDistanceRelativeToStartingCell() {
+    this.colorCellsByDistance(this.startingCell);
+  }
+
+  public colorCellsByDistanceRelativeToEndingCell() {
+    this.colorCellsByDistance(this.endingCell);
   }
 }

@@ -31,4 +31,8 @@ export class GridAnimator {
     this.timeoutIds.forEach(clearTimeout);
     this.timeoutIds.length = 0;
   }
+
+  public isClear() {
+    return this.timeoutIds.length == 0;
+  }
 }
