@@ -8,7 +8,7 @@ export class Grid {
   private readonly cells: Cell[][] = [];
   private readonly edges: Edge[];
   private readonly canvas: HTMLCanvasElement;
-  private playerPosition = { x: 0, y: 0 };
+  private readonly playerPosition = { x: 0, y: 0 };
 
   constructor(rows: number, cols: number, canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -36,18 +36,17 @@ export class Grid {
     const allPossibleEdges = [];
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
-        const randomWeight = Math.random();
         if (row < rows - 1)
           allPossibleEdges.push({
             from: cells[row][col],
             to: cells[row + 1][col],
-            weight: randomWeight,
+            weight: Math.random(),
           });
         if (col < cols - 1)
           allPossibleEdges.push({
             from: cells[row][col],
             to: cells[row][col + 1],
-            weight: randomWeight,
+            weight: Math.random(),
           });
       }
     }
@@ -107,8 +106,6 @@ export class Grid {
       this.playerPosition.x = newPosition.x;
       this.playerPosition.y = newPosition.y;
       this.drawCellsToCanvas();
-      // if (this.playerCell !== this.startingCell)
-      //   this.playerCell.draw(this.context, "rgb(50, 205, 50)");
     }
   }
 
