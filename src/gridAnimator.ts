@@ -3,6 +3,7 @@ import { SearchResult } from "./search";
 export class GridAnimator {
   private readonly context: CanvasRenderingContext2D;
   private readonly timeoutIds: number[] = [];
+  private readonly animationStepDurationMs = 5;
 
   constructor(canvas: HTMLCanvasElement) {
     const context = canvas.getContext("2d");
@@ -21,7 +22,7 @@ export class GridAnimator {
         visitedCells[index].draw(this.context, "rgb(153, 183, 237)");
         // Run the callback as part of the last animation step
         if (index === visitedCells.length - 2) runWhenFinished();
-      }, index * 5);
+      }, index * this.animationStepDurationMs);
 
       this.timeoutIds.push(timeoutId);
     }
