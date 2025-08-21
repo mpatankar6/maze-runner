@@ -10,7 +10,7 @@ import { UnionFind } from "./unionFind";
 export function minimumSpanningTree(edges: Edge[], numCells: number) {
   const mstEdges: Edge[] = [];
   // Descending order so Array.pop() returns the smallest edge
-  const worklist = edges.sort((a, b) => b.weight - a.weight);
+  const worklist = [...edges].sort((a, b) => b.weight - a.weight);
   const unionFind = new UnionFind();
 
   while (mstEdges.length < numCells - 1 && worklist.length > 0) {
