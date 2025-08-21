@@ -8,9 +8,45 @@
   <body>
     <div id="app">
       <h1>Maze Runner</h1>
-      <canvas id="maze-window" width="600" height="600">
-        Canvas is unsupported on this browser.
-      </canvas>
+      <hr />
+      <div id="maze">
+        <aside id="controls">
+          <p>Use the arrow keys to navigate through the maze.</p>
+          Height:
+          <input type="number" id="maze-height-field" value="10" />
+          Width:
+          <input type="number" id="maze-width-field" value="10" />
+          <input type="button" id="reset-button" value="Reset" />
+          <input
+            type="button"
+            id="bfs-button"
+            value="Perform Breadth-First Search"
+          />
+          <input
+            type="button"
+            id="dfs-button"
+            value="Perform Depth-First Search"
+          />
+          <input
+            type="button"
+            id="heatmap-relative-to-start-button"
+            value="Draw Heatmap Relative to Start"
+          />
+          <input
+            type="button"
+            id="heatmap-relative-to-end-button"
+            value="Draw Heatmap Relative to End"
+          />
+          <input
+            type="button"
+            id="clear-heatmap-button"
+            value="Clear Heatmap"
+          />
+        </aside>
+        <canvas id="maze-window" width="600" height="600">
+          Canvas is unsupported in the current browser configuration.
+        </canvas>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
