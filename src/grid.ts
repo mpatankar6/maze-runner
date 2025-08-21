@@ -15,7 +15,6 @@ export class Grid {
     this.populateCells(rows, cols);
     this.edges = this.getMinimumEdges(rows, cols, this.cells);
     this.informCellsOfTheirNeighbors();
-    console.log(this.cells);
   }
 
   private populateCells(rows: number, cols: number) {
