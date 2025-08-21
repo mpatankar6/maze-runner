@@ -32,7 +32,7 @@ export class GridAnimator {
     this.timeoutIds.length = 0;
   }
 
-  public isClear() {
+  public isInactive() {
     return this.timeoutIds.length == 0;
   }
 }
