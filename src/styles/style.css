@@ -15,10 +15,58 @@
 
 body {
   margin: 0;
+}
+
+input[type="number"] {
+  padding: 6px 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 20%;
+}
+
+input[type="button"] {
+  padding: 8px 16px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid rgb(110, 110, 110);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="button"]:hover {
+  border-color: #ffffff;
+  border-width: 3px;
+}
+
+.button-column {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+}
+
+.reset-button {
+  background-color: #075418;
+}
+
+.search-button {
+  background-color: #213547;
+}
+
+.heatmap-button {
+  background-color: rgb(104, 0, 67);
+}
+
+.dimension-input {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.dimension-input label {
+  font-weight: bold;
+  min-width: 120px;
 }
 
 #app {
@@ -26,6 +74,18 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+#maze {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+}
+
+#controls {
+  padding: 40px;
+  width: 100%;
 }
 
 #maze-window {
@@ -36,5 +96,21 @@ body {
   :root {
     color: #213547;
     background-color: #ffffff;
+  }
+
+  .reset-button {
+    background-color: #8af173;
+  }
+
+  .search-button {
+    background-color: #7ebbf0;
+  }
+
+  .heatmap-button {
+    background-color: rgb(221, 151, 196);
+  }
+
+  input[type="button"]:hover {
+    border-color: #000000;
   }
 }

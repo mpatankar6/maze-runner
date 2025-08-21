@@ -12,36 +12,52 @@
       <div id="maze">
         <aside id="controls">
           <p>Use the arrow keys to navigate through the maze.</p>
-          Height:
-          <input type="number" id="maze-height-field" value="10" />
-          Width:
-          <input type="number" id="maze-width-field" value="10" />
-          <input type="button" id="reset-button" value="Reset" />
-          <input
-            type="button"
-            id="bfs-button"
-            value="Perform Breadth-First Search"
-          />
-          <input
-            type="button"
-            id="dfs-button"
-            value="Perform Depth-First Search"
-          />
-          <input
-            type="button"
-            id="heatmap-relative-to-start-button"
-            value="Draw Heatmap Relative to Start"
-          />
-          <input
-            type="button"
-            id="heatmap-relative-to-end-button"
-            value="Draw Heatmap Relative to End"
-          />
-          <input
-            type="button"
-            id="clear-heatmap-button"
-            value="Clear Heatmap"
-          />
+          <div class="dimension-input">
+            <label for="maze-height-field"> Maze Height: </label>
+            <input type="number" id="maze-height-field" value="10" />
+          </div>
+          <div class="dimension-input">
+            <label for="maze-width-field">Maze Width: </label>
+            <input type="number" id="maze-width-field" value="10" />
+          </div>
+          <div class="button-column">
+            <input
+              type="button"
+              class="reset-button"
+              id="reset-button"
+              value="Reset"
+            />
+            <input
+              type="button"
+              class="search-button"
+              id="bfs-button"
+              value="Perform Breadth-First Search"
+            />
+            <input
+              type="button"
+              class="search-button"
+              id="dfs-button"
+              value="Perform Depth-First Search"
+            />
+            <input
+              type="button"
+              class="heatmap-button"
+              id="heatmap-relative-to-start-button"
+              value="Draw Heatmap Relative to Start"
+            />
+            <input
+              type="button"
+              class="heatmap-button"
+              id="heatmap-relative-to-end-button"
+              value="Draw Heatmap Relative to End"
+            />
+            <input
+              type="button"
+              class="heatmap-button"
+              id="clear-heatmap-button"
+              value="Clear Heatmap"
+            />
+          </div>
         </aside>
         <canvas id="maze-window" width="600" height="600">
           Canvas is unsupported in the current browser configuration.
