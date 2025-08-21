@@ -39,6 +39,12 @@ input[type="button"]:hover {
   border-width: 3px;
 }
 
+footer {
+  font-size: small;
+  text-align: center;
+  padding-top: 50px;
+}
+
 .button-column {
   display: flex;
   flex-direction: column;
